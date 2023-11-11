@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +27,8 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
+	@JsonIgnore //Suprime a visualização da lista de pedido no retorno da requisição do client.
+				//Jackson: Biblioteca de Serialização do Json. @JsonIgnore evita o looping nas associsções (error: at com.fasterxml.jackson.databind...)
 	@OneToMany(mappedBy = "client") //anotação da JPA que mapeia a chaves estrangeira
 	private List<Order> orders = new ArrayList<>();
 	
