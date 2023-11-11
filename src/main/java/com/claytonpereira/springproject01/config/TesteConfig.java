@@ -13,14 +13,13 @@ import com.claytonpereira.springproject01.repositories.UserRepository;
 @Profile("test")
 public class TesteConfig implements CommandLineRunner {
 
-	/* ## Injeçao por camao utilizando o Framework Spring ## */
-//	@Autowired
-//	private UserRepository userRepository;
+	//Injecao de dependencia do framework com @Autowired
+	//@Autowired
+	// 1. declaracao da dependecia
+	private final UserRepository userRepository;
 	
-	/* ## Injecao por construtor ## */
-	  // 1. declaracao da dependecia
-	private final UserRepository userRepository; //atributo
-	  // 2. injecao da dependencia
+	//Injecao de dependencia por construtor
+	// 2. injecao da dependencia
 	TesteConfig(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
