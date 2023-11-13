@@ -7,9 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.claytonpereira.springproject01.entities.Category;
 import com.claytonpereira.springproject01.entities.Order;
 import com.claytonpereira.springproject01.entities.User;
 import com.claytonpereira.springproject01.entities.enuns.OrderStatus;
+import com.claytonpereira.springproject01.repositories.CategoryRepository;
 import com.claytonpereira.springproject01.repositories.OrderRepository;
 import com.claytonpereira.springproject01.repositories.UserRepository;
 
@@ -22,12 +24,14 @@ public class TesteConfig implements CommandLineRunner {
 	// 1. declaracao da dependecia
 	private final UserRepository userRepository;
 	private final OrderRepository orderRepository;
+	private final CategoryRepository categoryRepository;
 	
 	//Injecao de dependencia por construtor
 	// 2. injecao da dependencia
-	TesteConfig(UserRepository userRepository, OrderRepository orderRepository) {
+	TesteConfig(UserRepository userRepository, OrderRepository orderRepository, CategoryRepository categoryRepository) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;
+		this.categoryRepository = categoryRepository;
 	}
 	
 	@Override //comandLineRunner method
@@ -39,8 +43,13 @@ public class TesteConfig implements CommandLineRunner {
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), OrderStatus.WAITING_PAYMENY,u2);
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.WAITING_PAYMENY,u1);
 		
+		Category cat1 = new Category(null, "Electronics");
+		Category cat2 = new Category(null, "Books");
+		Category cat3 = new Category(null, "Computers");
+		
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 	}
 
 }
