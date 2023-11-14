@@ -1,13 +1,11 @@
 package com.claytonpereira.springproject01.entities;
 
-import java.io.Serializable;
-import java.util.Objects;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_category")
@@ -18,6 +16,9 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
+	@Transient //Anotation para o JPA ignorar a relação
+	private Set<Category> categories = new HashSet<>();
 	
 	public Category() {
 	}

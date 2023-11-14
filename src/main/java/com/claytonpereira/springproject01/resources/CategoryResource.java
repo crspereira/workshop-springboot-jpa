@@ -1,15 +1,14 @@
 package com.claytonpereira.springproject01.resources;
 
-import java.util.List;
-
+import com.claytonpereira.springproject01.entities.Category;
+import com.claytonpereira.springproject01.services.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.claytonpereira.springproject01.entities.Category;
-import com.claytonpereira.springproject01.services.CategoryService;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -31,7 +30,7 @@ public class CategoryResource { //resource é um controlador REST
 	}
 	
 	@GetMapping(value = "{id}")
-	public ResponseEntity<Category> findById(@PathVariable Long id ) {
+	public ResponseEntity<Category> findById(@PathVariable Long id) {
 		Category user = categoryService.findById(id);
 		return ResponseEntity.ok().body(user);
 	}

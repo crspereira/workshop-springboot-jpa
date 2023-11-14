@@ -1,15 +1,14 @@
 package com.claytonpereira.springproject01.resources;
 
-import java.util.List;
-
+import com.claytonpereira.springproject01.entities.Order;
+import com.claytonpereira.springproject01.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.claytonpereira.springproject01.entities.Order;
-import com.claytonpereira.springproject01.services.OrderService;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/orders")
@@ -31,7 +30,7 @@ public class OrderResource { //resource é um controlador REST
 	}
 	
 	@GetMapping(value = "{id}")
-	public ResponseEntity<Order> findById(@PathVariable Long id ) {
+	public ResponseEntity<Order> findById(@PathVariable Long id) {
 		Order user = userService.findById(id);
 		return ResponseEntity.ok().body(user);
 	}

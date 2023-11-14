@@ -1,12 +1,11 @@
 package com.claytonpereira.springproject01.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.claytonpereira.springproject01.entities.Category;
 import com.claytonpereira.springproject01.repositories.CategoryRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -25,7 +24,7 @@ public class CategoryService {
 	}
 	
 	public Category findById(Long id) {
-		Optional<Category> user = categoryRepository.findById(id);
-		return user.get();
+		Optional<Category> category = categoryRepository.findById(id);
+		return category.get();
 	}
 }
