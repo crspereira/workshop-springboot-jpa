@@ -16,20 +16,23 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String descriotion;
+    private String description;
     private Double price;
     private String umgURL;
 
-    @Transient //Anotation para o JPA ignorar a relação
+    @ManyToMany
+    @JoinTable(name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(Long id, String name, String descriotion, Double price, String umgURL) {
+    public Product(Long id, String name, String description, Double price, String umgURL) {
         this.id = id;
         this.name = name;
-        this.descriotion = descriotion;
+        this.description = description;
         this.price = price;
         this.umgURL = umgURL;
     }
@@ -50,12 +53,12 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    public String getDescriotion() {
-        return descriotion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriotion(String descriotion) {
-        this.descriotion = descriotion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Double getPrice() {
@@ -83,7 +86,7 @@ public class Product implements Serializable {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", descriotion='" + descriotion + '\'' +
+                ", descriotion='" + description + '\'' +
                 ", price=" + price +
                 ", umgURL='" + umgURL + '\'' +
                 ", categories=" + categories +
