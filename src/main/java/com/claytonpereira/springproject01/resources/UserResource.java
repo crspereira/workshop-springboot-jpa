@@ -42,4 +42,10 @@ public class UserResource { //resource é um controlador REST
 		return ResponseEntity.created(uri).body(obj);
 	}
 
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<User> delete(@PathVariable Long id) {
+		userService.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
