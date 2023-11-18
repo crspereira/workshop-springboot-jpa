@@ -1,12 +1,11 @@
 package com.claytonpereira.springproject01.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-
 import com.claytonpereira.springproject01.entities.User;
 import com.claytonpereira.springproject01.repositories.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -27,5 +26,9 @@ public class UserService {
 	public User findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
 		return user.get();
+	}
+
+	public User insert(User obj) {
+		return userRepository.save(obj);
 	}
 }
