@@ -1,19 +1,14 @@
 package com.claytonpereira.springproject01.entities;
 
-import java.io.Serializable;
-import java.time.Instant;
-import java.util.Objects;
-
 import com.claytonpereira.springproject01.entities.enuns.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -30,6 +25,9 @@ public class Order implements Serializable {
 	@ManyToOne //anotação da JPA que cria as chaves estrangeiras
 	@JoinColumn(name = "client_id") //anotacao JPA para o nome da chave estrangeira
 	private User client;
+
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 	
 	public Order() {
 	}
@@ -73,6 +71,10 @@ public class Order implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override

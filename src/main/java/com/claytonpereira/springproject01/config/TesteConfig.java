@@ -1,14 +1,8 @@
 package com.claytonpereira.springproject01.config;
 
-import com.claytonpereira.springproject01.entities.Category;
-import com.claytonpereira.springproject01.entities.Order;
-import com.claytonpereira.springproject01.entities.Product;
-import com.claytonpereira.springproject01.entities.User;
+import com.claytonpereira.springproject01.entities.*;
 import com.claytonpereira.springproject01.entities.enuns.OrderStatus;
-import com.claytonpereira.springproject01.repositories.CategoryRepository;
-import com.claytonpereira.springproject01.repositories.OrderRepository;
-import com.claytonpereira.springproject01.repositories.ProductRepository;
-import com.claytonpereira.springproject01.repositories.UserRepository;
+import com.claytonpereira.springproject01.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -27,15 +21,18 @@ public class TesteConfig implements CommandLineRunner {
 	private final OrderRepository orderRepository;
 	private final CategoryRepository categoryRepository;
 	private final ProductRepository productRepository;
+	private final OrderItemRepository orderItemRepository;
 	
 	//Injecao de dependencia por construtor
 	// 2. injecao da dependencia
 	TesteConfig(UserRepository userRepository, OrderRepository orderRepository,
-				CategoryRepository categoryRepository, ProductRepository productRepository) {
+				CategoryRepository categoryRepository, ProductRepository productRepository,
+				OrderItemRepository orderItemRepository) {
 		this.userRepository = userRepository;
 		this.orderRepository = orderRepository;
 		this.categoryRepository = categoryRepository;
 		this.productRepository =productRepository;
+		this.orderItemRepository = orderItemRepository;
 	}
 	
 	@Override //comandLineRunner method
@@ -64,10 +61,17 @@ public class TesteConfig implements CommandLineRunner {
 		p4.getCategories().add(cat3);
 		p5.getCategories().add(cat2);
 
+		OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+		OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
+
 		userRepository.saveAll(Arrays.asList(u1, u2));
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+
 	}
 
 }
