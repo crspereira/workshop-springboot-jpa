@@ -2,6 +2,7 @@ package com.claytonpereira.springproject01.services;
 
 import com.claytonpereira.springproject01.entities.User;
 import com.claytonpereira.springproject01.repositories.UserRepository;
+import com.claytonpereira.springproject01.services.execeptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> user = userRepository.findById(id);
-		return user.get();
+		return user.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
@@ -34,7 +35,6 @@ public class UserService {
 
 	public void delete(Long id){
 		userRepository.deleteById(id);
-
 	}
 
 	public User update(Long id, User obj) {
@@ -48,6 +48,5 @@ public class UserService {
 		entity.setEmail(obj.getEmail());
 		entity.setPhone(obj.getPhone());
 	}
-
 
 }
