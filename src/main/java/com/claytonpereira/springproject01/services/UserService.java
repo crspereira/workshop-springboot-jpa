@@ -4,6 +4,8 @@ import com.claytonpereira.springproject01.entities.User;
 import com.claytonpereira.springproject01.repositories.UserRepository;
 import com.claytonpereira.springproject01.services.execeptions.ResourceDataViolationIntegrityException;
 import com.claytonpereira.springproject01.services.execeptions.ResourceNotFoundException;
+import com.claytonpereira.springproject01.services.execeptions.ServiceEntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -46,11 +48,16 @@ public class UserService {
 	}
 
 	public User update(Long id, User obj) {
-		User entity = userRepository.getReferenceById(id);
-		updateData(entity, obj);
-		return userRepository.save(entity);
+		try {
+			User entity = userRepository.getReferenceById(id);
+			updateData(entity, obj);
+			return userRepository.save(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ServiceEntityNotFoundException(id);
+		}
 	}
 
+	//método auxiliar
 	private void updateData(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
