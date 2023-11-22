@@ -1,5 +1,6 @@
 package com.claytonpereira.springproject01.resources.exceptions;
 
+import com.claytonpereira.springproject01.services.execeptions.ResourceDataViolationIntegrityException;
 import com.claytonpereira.springproject01.services.execeptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -19,4 +20,13 @@ public class ResourceExceptionHandler {
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(ResourceDataViolationIntegrityException.class) //captura a execeção específica
+    public ResponseEntity<StandardError> resourceDataVioltationIntegraty(ResourceDataViolationIntegrityException e, HttpServletRequest request) {
+        String error = "DataBase Integrity Violation!";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
 }

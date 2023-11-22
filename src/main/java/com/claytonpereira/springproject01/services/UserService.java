@@ -2,7 +2,9 @@ package com.claytonpereira.springproject01.services;
 
 import com.claytonpereira.springproject01.entities.User;
 import com.claytonpereira.springproject01.repositories.UserRepository;
+import com.claytonpereira.springproject01.services.execeptions.ResourceDataViolationIntegrityException;
 import com.claytonpereira.springproject01.services.execeptions.ResourceNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +35,14 @@ public class UserService {
 		return userRepository.save(obj);
 	}
 
-	public void delete(Long id){
-		userRepository.deleteById(id);
+	public void delete(Long id) {
+		try {
+			if (userRepository.existsById(id)) {
+				userRepository.deleteById(id);
+			} throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new ResourceDataViolationIntegrityException(e.getMessage());
+		}
 	}
 
 	public User update(Long id, User obj) {
